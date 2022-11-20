@@ -3,6 +3,7 @@ import css from '../ContactForm/ContactForm.module.css';
 
 import { Input } from 'components/Input/Input';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 export default function ContactForm({ onSubmit }) {
   const [name, setName] = useState('');
@@ -24,7 +25,7 @@ export default function ContactForm({ onSubmit }) {
   const handleSubmitForm = event => {
     event.preventDefault();
 
-    const newContact = { name, number };
+    const newContact = { name, number, id: nanoid(10) };
 
     onSubmit(newContact);
 

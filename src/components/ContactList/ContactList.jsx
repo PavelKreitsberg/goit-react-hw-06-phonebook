@@ -6,7 +6,7 @@ export const ContactList = ({ list, onClick }) => {
   return (
     <ul className="contactList">
       {list
-        .sort((a, b) => a.name.localeCompare(b.name))
+        // .sort((a, b) => a.name.localeCompare(b.name))
         .map(({ id, name, number }) => (
           <li key={id} className={css.item}>
             <p className={css.item__text}>

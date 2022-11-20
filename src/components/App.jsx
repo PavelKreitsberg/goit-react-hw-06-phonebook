@@ -1,21 +1,18 @@
-import { useState, useEffect } from 'react';
 import css from '../components/App.module.css';
 
 import { Section } from './Section/Section';
 import ContactForm from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
-import { nanoid } from 'nanoid';
+import { useDispatch, useSelector } from 'react-redux';
+import { contactAdded, contactDeleted } from 'redux/contacts/contactsSlice';
+import { filterChange } from 'redux/filter/filterSlice';
 
 export default function App() {
-  const [contacts, setContacts] = useState(() => {
-    return JSON.parse(localStorage.getItem('contacts')) ?? [];
-  });
-  const [filter, setFilter] = useState('');
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
 
   const formSubmitHandler = data => {
     const inContacts = contacts.find(contact => contact.name === data.name);
@@ -25,21 +22,19 @@ export default function App() {
       return;
     }
 
-    setContacts(prevState => [...prevState, { ...data, id: nanoid(10) }]);
+    dispatch(contactAdded(data));
   };
 
   const handleInputChange = event => {
-    setFilter(event.target.value);
+    dispatch(filterChange(event.target.value));
   };
 
   const deleteContactByClick = event => {
-    setContacts(prevState =>
-      prevState.filter(contact => contact.id !== event.target.id)
-    );
+    dispatch(contactDeleted(event.target.id));
   };
 
   const filterContactListByQuery = () => {
-    if (filter) {
+    if (filter && contacts) {
       return contacts.filter(contact =>
         contact.name.toUpperCase().includes(filter.toUpperCase())
       );
