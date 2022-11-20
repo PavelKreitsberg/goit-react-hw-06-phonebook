@@ -1,0 +1,9 @@
+.section {
+  width: 350px;
+  border-radius: 10px;
+}
+
+.title {
+  text-align: left;
+  color: #babecc;
+}

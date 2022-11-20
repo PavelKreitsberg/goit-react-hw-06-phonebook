@@ -1,0 +1,10 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  box-shadow: -5px -5px 20px white, 5px 5px 20px #babecc;
+
+  width: 350px;
+  padding: 8px;
+
+  border-radius: 10px;
+}
